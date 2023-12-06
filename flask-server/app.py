@@ -14,6 +14,8 @@ import boto3
 from botocore.exceptions import NoCredentialsError
 import requests
 
+app = Flask(__name__)
+
 def download_model_from_s3(bucket_name, file_key, local_path):
     aws_access_key_id='AKIAU6EA3JVX5E7IDAG3'
     aws_secret_access_key='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'
@@ -53,8 +55,19 @@ def read_csv_from_s3(bucket_name, file_key):
     except Exception as e:
         print(f"Error reading data: {e}")
 
-
-app = Flask(__name__)
+@app.route("/createPlots")
+def create():
+    download_model_from_s3('ids-data-raw', 'rf_model.joblib', 'rf_model_s3_bucket.joblib')
+    data = read_csv_from_s3('ids-data-raw', 'X_test.csv')
+    labels = read_csv_from_s3('ids-data-raw', 'y_test.csv')
+    # Load the model using joblib
+    loaded_model = joblib.load('rf_model_s3_bucket.joblib')
+    predictions = loaded_model.predict(data.to_numpy())
+    acc = np.round(accuracy_score(labels, predictions),3) * 100
+    print(acc)
+    probabilities = loaded_model.predict_proba(data.to_numpy())
+    attacks = {0: 'BENIGN', 1: 'Botnet', 2: 'Botnet - Attempted', 3: 'DDoS', 4: 'DoS GoldenEye', 5: 'DoS GoldenEye - Attempted', 6: 'DoS Hulk', 7: 'DoS Hulk - Attempted', 8: 'DoS Slowhttptest', 9: 'DoS Slowhttptest - Attempted', 10: 'DoS Slowloris', 11: 'DoS Slowloris - Attempted', 12: 'FTP-Patator', 13: 'FTP-Patator - Attempted', 14: 'Heartbleed', 15: 'Infiltration', 16: 'Infiltration - Attempted', 17: 'Infiltration - Portscan', 18: 'Portscan', 19: 'SSH-Patator', 20: 'SSH-Patator - Attempted', 21: 'Web Attack - Brute Force', 22: 'Web Attack - Brute Force - Attempted', 23: 'Web Attack - SQL Injection', 24: 'Web Attack - SQL Injection - Attempted', 25: 'Web Attack - XSS', 26: 'Web Attack - XSS - Attempted'}
+    return 
 
 @app.route("/members")
 def members():
@@ -99,7 +112,16 @@ def get_binary_pie_chart_data():
 @app.route('/predict')
 def predict():        
     # Get data from the frontend
-
+    download_model_from_s3('ids-data-raw', 'rf_model.joblib', 'rf_model_s3_bucket.joblib')
+    data = read_csv_from_s3('ids-data-raw', 'X_test.csv')
+    labels = read_csv_from_s3('ids-data-raw', 'y_test.csv')
+    # Load the model using joblib
+    loaded_model = joblib.load('rf_model_s3_bucket.joblib')
+    predictions = loaded_model.predict(data.to_numpy())
+    acc = np.round(accuracy_score(labels, predictions),3) * 100
+    print(acc)
+    probabilities = loaded_model.predict_proba(data.to_numpy())
+    attacks = {0: 'BENIGN', 1: 'Botnet', 2: 'Botnet - Attempted', 3: 'DDoS', 4: 'DoS GoldenEye', 5: 'DoS GoldenEye - Attempted', 6: 'DoS Hulk', 7: 'DoS Hulk - Attempted', 8: 'DoS Slowhttptest', 9: 'DoS Slowhttptest - Attempted', 10: 'DoS Slowloris', 11: 'DoS Slowloris - Attempted', 12: 'FTP-Patator', 13: 'FTP-Patator - Attempted', 14: 'Heartbleed', 15: 'Infiltration', 16: 'Infiltration - Attempted', 17: 'Infiltration - Portscan', 18: 'Portscan', 19: 'SSH-Patator', 20: 'SSH-Patator - Attempted', 21: 'Web Attack - Brute Force', 22: 'Web Attack - Brute Force - Attempted', 23: 'Web Attack - SQL Injection', 24: 'Web Attack - SQL Injection - Attempted', 25: 'Web Attack - XSS', 26: 'Web Attack - XSS - Attempted'}
     data['Potential Threat'] = predictions
     prob = [np.round(max(probabilities[i]), 4) for i in range(len(probabilities))]
     data['Probability of the Potential Threat'] = prob
@@ -120,4 +142,4 @@ def predict():
     return jsonify(result_json)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host = '0.0.0.0', port = 5000, debug=True)
