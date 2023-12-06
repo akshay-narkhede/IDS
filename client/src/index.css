@@ -1,0 +1,236 @@
+body {
+  margin: 10;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #EEEDEB;
+  /* color: #000000; */
+}
+
+.header {
+  padding: 5px;
+  display: flex;
+  background-color: #990000; /* Header background color */
+  color: #EEEDEB; /* Text color */
+  border-radius: 50px;
+}
+
+.headerPreds {
+  padding: 5px;
+
+  background-color: #990000; /* Header background color */
+  color: #EEEDEB; /* Text color */
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.dark {
+  background-color: #333;
+  color: #fff;
+}
+.light {
+  background-color: #EEEDEB;
+  color: #333;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  
+}
+
+/* Add this to your CSS */
+.dark-mode-toggle {
+  display: flex;
+  justify-content: end;
+}
+
+.toggle-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 10px;
+  transition: transform 0.3s ease-in-out;
+  justify-content: end;
+}
+
+.toggle-button:hover {
+  transform: scale(1.2);
+}
+
+.dark-mode-toggle {
+  position: absolute;
+  top: 22px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-end;
+  
+}
+
+.react-switch {
+  margin-left: 10px; /* Adjust the margin for spacing */
+}
+
+.container {
+  display: flex;
+}
+
+.box {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+}
+
+
+
+.buttons-container {
+  align-items: right;
+  justify-content: space-evenly;
+}
+
+.button {
+  /* justify-content: space-between; */
+  /* align-items: left; */
+  padding: 10px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.predictions {
+  /* background-color: #e74c3c; */
+  position: fixed; 
+  color: white;
+  bottom: 30px;
+  right: 30px;
+  background-color: #990000;
+  border-color: black;
+  border-width: 2px;
+  /* align-items: center; */
+  text-align: center;
+  width: 150px; /* Set the width */
+  height: 60px; /* Set the height */
+  border-radius: 30px;
+  
+}
+
+.analytics {
+  /* background-color: #3498db; */
+  color: white;
+  border-color: black;
+  border-width: 2px;
+  background-color: #333;
+}
+
+.scroll-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db; /* Loading icon color */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(172, 12, 12, 0.8); /* Semi-transparent background */
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+/* Hide loading icon by default */
+.loading-icon {
+  display: none;
+}
+
+/* Add these styles to your component or a separate stylesheet */
+
+/* Add these styles to your component or a separate stylesheet */
+
+/* Style for the table */
+.TableContainer {
+  
+  text-align: center;
+  align-items: center;
+  width: 800px;
+  margin: 20px auto;
+  border: 2px solid black; /* Add a black border to the table */
+  color: black;
+}
+
+/* Style for the table headers */
+.TableContainer th {
+  background-color: #26428b;
+  color: white;
+  text-align: center; /* Center the text in the header cells */
+  border: 2px solid black;
+}
+
+/* Style for alternating rows */
+.TableContainer tbody tr:nth-child(even) {
+  border: 2px solid black;
+  background-color: #f9f9f9;
+  text-align: center;
+  align-items: center;
+  width: 200px;
+  margin: 20px auto;
+  color: black;
+}
+/* Style for the table cells */
+.TableContainer td, .TableContainer th {
+  border: 2px solid black;
+  display: flexbox;
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+  width: 200px;
+  margin: 20px auto;
+}
+
+/* Style for the accuracy paragraph */
+.AccuracyParagraph {
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center; /* Center the text in the accuracy paragraph */
+}
+
+.TableContainer tbody tr.prediction-green {
+  background-color: #c8e6c9; /* Light green color */
+}
+
+.TableContainer tbody tr.prediction-red {
+  background-color: #ffcdd2; /* Light red color */
+}
